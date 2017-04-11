@@ -1,0 +1,7 @@
+{
+  "host" : "hostname or ipaddress",
+  "user" : "user",
+  "password": "password",
+  "db" : "database",
+  "charset": "charset(utf-8?)"
+}
