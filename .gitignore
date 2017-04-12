@@ -1,7 +1,8 @@
 # custom 
-src/logic
+logic/
 practice/
 *.json
+.idea/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

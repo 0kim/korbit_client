@@ -1,8 +1,11 @@
+#-*- coding: utf-8 -*-
+
 import json
-from util import util
-from client.adapter import MysqlWriter
-from client.korbit_exchange import KorbitExchage
+from korbit import util
+import korbit.client.adapter as kbadapter
+from korbit.client.korbit_exchange import KorbitExchage
 from datetime import datetime
+
 import pymysql
 
 
@@ -10,7 +13,7 @@ TABLE_NAME = 'all_transactions'
 prop_mysql = util.load_properties('../adapter_mysql.json')
 
 kbexchnage = KorbitExchage()
-mywriter = MysqlWriter(prop_mysql, TABLE_NAME)
+mywriter = kbadapter.MysqlInputAdapter(prop_mysql, TABLE_NAME)
 
 transactions = kbexchnage.getFilledOrders(time='day')
 

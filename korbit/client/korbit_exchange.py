@@ -1,5 +1,8 @@
+#-*- coding: utf-8 -*-
+
 import requests
 import json
+
 
 CATEGORY = {
     'all' : 'all',  # 매수/매도 모두

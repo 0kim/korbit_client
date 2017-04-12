@@ -1,3 +1,5 @@
+#-*- coding: utf-8 -*-
+
 import json
 
 AUTH_CONTEXT_FILE = '../authcontext.json'
@@ -19,7 +21,7 @@ class AuthContext(object) :
 
     def saveAuthContext(self):
         with open(AUTH_CONTEXT_FILE, 'w') as f:
-            json.dump(self._auth_context, f)
+            json.dump(self._auth_context, f, sort_keys=True, indent=4)
             f.close()
         print("auth context is saved...")
 

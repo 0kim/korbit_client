@@ -1,6 +1,8 @@
+#-*- coding: utf-8 -*-
+
 import json
 import requests
-from auth.auth_context import AuthContext
+from korbit.auth.auth_context import AuthContext
 
 TYPE = {
         'limit': 'limit', # 지정가 주문

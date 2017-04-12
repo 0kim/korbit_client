@@ -1,5 +1,7 @@
+#-*- coding: utf-8 -*-
+
 from datetime import datetime
-from auth.auth_context import *
+from korbit.auth.auth_context import AuthContext
 import requests
 import json
 
