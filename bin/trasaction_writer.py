@@ -13,7 +13,7 @@ TABLE_NAME = 'all_transactions'
 prop_mysql = util.load_properties('../adapter_mysql.json')
 
 kbexchnage = KorbitExchage()
-mywriter = kbadapter.MysqlInputAdapter(prop_mysql, TABLE_NAME)
+mywriter = kbadapter.MysqlOutputAdapter(prop_mysql, TABLE_NAME)
 
 transactions = kbexchnage.getFilledOrders(time='day')
 
