@@ -12,7 +12,6 @@ CURRENCY_PAIR = 'btc_krw'
 
 class KorbitClient(object):
     _ctx = None
-    _nonce = 90  # todo: persiste
 
     def __init__(self):
         self._ctx = AuthContext()
@@ -23,9 +22,7 @@ class KorbitClient(object):
         return hearders
 
     def _getNonce(self):
-        n = self._nonce
-        self._nonce += 2 # increase 2 for next order
-        return n
+        return self._ctx.increaseNonce()
 
     def getUserInfo(self):
         # curl - D - -H "Authorization: Bearer $ACCESS_TOKEN" https: // api.korbit.co.kr / v1 / user / info
@@ -84,7 +81,7 @@ class KorbitClient(object):
         if r.status_code != 200:
             raise Exception("Status code: " + str(r.status_code) + " , body: " + r.text)
 
-        return r.text   # {"orderId":4140437,"status":"success","currencyPair":"btc_krw"}
+        return jsons(r.text)   # {"orderId":4140437,"status":"success","currencyPair":"btc_krw"}
 
 
     def getOpenOrders(self, offset=0, limit=10):

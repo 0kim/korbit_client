@@ -25,9 +25,9 @@ timer.start()
 
 for t in transactions:
     row = (t['tid'],          #1
-         t['amount'],       #2
-         t['price'],        #3
-         datetime.fromtimestamp(t['timestamp'] / 1000)) #4
+           t['amount'],       #2
+           t['price'],        #3
+           datetime.fromtimestamp(t['timestamp'] / 1000)) #4
     # print(row)
     try:
         mywriter.write(row)

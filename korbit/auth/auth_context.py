@@ -1,8 +1,19 @@
 #-*- coding: utf-8 -*-
 
+# The following properties must be specified in the 'authcontext.json' file
+#
+# ACCESS_TOKEN
+# REFRESH_TOKEN
+# LAST_REFRESH_TIME
+# CLIENT_ID
+# CLIENT_SECRET
+# NONCE
+
+
 import json
 
 AUTH_CONTEXT_FILE = '../authcontext.json'
+NONCE_INCREMENT = 2
 
 class AuthContext(object) :
     _auth_context = None
@@ -51,7 +62,14 @@ class AuthContext(object) :
     def getClientSecret(self):
         return self._auth_context['CLIENT_SECRET']
 
+    def getNonce(self):
+        return self._auth_context['NONCE']
 
+    # todo: separate it from
+    def increaseNonce(self):
+        n = self._auth_context['NONCE'] + NONCE_INCREMENT
+        self.saveAuthContext()
+        return n
 
 
 
