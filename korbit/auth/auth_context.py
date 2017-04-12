@@ -67,9 +67,9 @@ class AuthContext(object) :
 
     # todo: separate it from
     def increaseNonce(self):
-        n = self._auth_context['NONCE'] + NONCE_INCREMENT
+        self._auth_context['NONCE'] += NONCE_INCREMENT
         self.saveAuthContext()
-        return n
+        return self._auth_context['NONCE']
 
 
 

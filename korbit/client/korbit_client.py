@@ -3,6 +3,7 @@
 import json
 import requests
 from korbit.auth.auth_context import AuthContext
+import korbit.auth.token as token
 
 TYPE = {
         'limit': 'limit', # 지정가 주문
@@ -27,7 +28,13 @@ class KorbitClient(object):
     def getUserInfo(self):
         # curl - D - -H "Authorization: Bearer $ACCESS_TOKEN" https: // api.korbit.co.kr / v1 / user / info
         url = "https://api.korbit.co.kr/v1/user/info"
+
         r = requests.get(url, headers=self._getHeadersWithAccessToken())
+        if r.status_code == 401:
+            token.token_refresh()
+            self._ctx.reloadAuthContext()
+            r = requests.get(url, headers=self._getHeadersWithAccessToken())
+
         if r.status_code != 200:
             raise Exception("Status code: " + str(r.status_code) + " , body: " + r.text)
 
@@ -55,6 +62,11 @@ class KorbitClient(object):
         # print(data)
 
         r = requests.post(url, headers=self._getHeadersWithAccessToken(), data=data)
+        if r.status_code == 401:
+            token.token_refresh()
+            self._ctx.reloadAuthContext()
+            r = requests.get(url, headers=self._getHeadersWithAccessToken())
+
         if r.status_code != 200:
             raise Exception("Status code: " + str(r.status_code) + " , body: " + r.text)
 
@@ -78,10 +90,15 @@ class KorbitClient(object):
         # print(data)
 
         r = requests.post(url, headers=self._getHeadersWithAccessToken(), data=data)
+        if r.status_code == 401:
+            token.token_refresh()
+            self._ctx.reloadAuthContext()
+            r = requests.get(url, headers=self._getHeadersWithAccessToken())
+
         if r.status_code != 200:
             raise Exception("Status code: " + str(r.status_code) + " , body: " + r.text)
 
-        return jsons(r.text)   # {"orderId":4140437,"status":"success","currencyPair":"btc_krw"}
+        return json.loads(r.text)   # {"orderId":4140437,"status":"success","currencyPair":"btc_krw"}
 
 
     def getOpenOrders(self, offset=0, limit=10):
@@ -98,6 +115,11 @@ class KorbitClient(object):
         # print(data)
 
         r = requests.get(url, headers=self._getHeadersWithAccessToken(), params=params)
+        if r.status_code == 401:
+            token.token_refresh()
+            self._ctx.reloadAuthContext()
+            r = requests.get(url, headers=self._getHeadersWithAccessToken())
+
         if r.status_code != 200:
             raise Exception("Status code: " + str(r.status_code) + " , body: " + r.text)
 
@@ -115,6 +137,11 @@ class KorbitClient(object):
         }
 
         r = requests.get(url, headers=self._getHeadersWithAccessToken(), params=params)
+        if r.status_code == 401:
+            token.token_refresh()
+            self._ctx.reloadAuthContext()
+            r = requests.get(url, headers=self._getHeadersWithAccessToken())
+
         if r.status_code != 200:
             raise Exception("Status code: " + str(r.status_code) + " , body: " + r.text)
 
