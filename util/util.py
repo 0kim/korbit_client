@@ -1,17 +1,21 @@
 #-*- coding: utf-8 -*-
 
 import json
+import logging
 from datetime import datetime
 
+logger = logging.getLogger(__name__)
 
 def load_properties(json_filename):
+    logger.info("Opening properties file " + json_filename)
     with open(json_filename, 'r') as f:
         properties = json.load(f)
 
     return properties
 
 def now_str():
-    return str(datetime.now())
+    return datetime.now().strftime('%Y-%m-%d %T %z')
+
 
 class timer(object):
     _start = 0

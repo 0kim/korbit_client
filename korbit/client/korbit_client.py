@@ -4,6 +4,9 @@ import json
 import requests
 from korbit.auth.auth_context import AuthContext
 import korbit.auth.token as token
+import logging
+
+logger = logging.getLogger(__file__)
 
 TYPE = {
         'limit': 'limit', # 지정가 주문

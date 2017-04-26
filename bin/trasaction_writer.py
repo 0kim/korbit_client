@@ -1,13 +1,12 @@
 #-*- coding: utf-8 -*-
 
-import json
-from korbit import util
-import korbit.client.adapter as kbadapter
-from korbit.client.korbit_exchange import KorbitExchage
 from datetime import datetime
 
 import pymysql
 
+import korbit.client.adapter as kbadapter
+from korbit.client.korbit_exchange import KorbitExchage
+from util import util
 
 TABLE_NAME = 'all_transactions'
 prop_mysql = util.load_properties('../adapter_mysql.json')
@@ -41,7 +40,7 @@ elapsed_time = timer.stop()
 mywriter.close()
 
 print(util.now_str() +
-      " Result: "+
+      " Result: " +
       " elapsed time: " + str(elapsed_time) +
       ", success records: " + str(count_insertion_success) +
       ", ignored records: " + str(count_pk_duplication))
