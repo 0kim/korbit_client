@@ -1,5 +1,6 @@
 #-*- coding: utf-8 -*-
 
+import time
 import json
 import requests
 from korbit.auth.auth_context import AuthContext
@@ -13,6 +14,7 @@ TYPE = {
         'market': 'market' # 시장가 주문
 }
 CURRENCY_PAIR = 'btc_krw'
+WAIT_INTERVAL_SEC = 5
 
 class KorbitClient(object):
     _ctx = None
@@ -37,12 +39,20 @@ class KorbitClient(object):
             token.token_refresh()
             self._ctx.reloadAuthContext()
             r = requests.get(url, headers=self._getHeadersWithAccessToken())
+        elif r.status_code == 504: # Gateway time-out
+            for i in range (1, 10):
+                # wait and re-execute it 10 times
+                logger.info(__name__ + " 504 (gateway time-out) wait " +
+                            str(WAIT_INTERVAL_SEC) + " seconds and re-execute. Try " + str(i))
+                time.wait(WAIT_INTERVAL_SEC)
+                r = requests.get(url, headers=self._getHeadersWithAccessToken())
+                if r.status_code != 504:
+                    break;
 
         if r.status_code != 200:
             raise Exception("Status code: " + str(r.status_code) + " , body: " + r.text)
 
         return r.text
-
 
     def getTransaction(self):
         return
@@ -69,6 +79,15 @@ class KorbitClient(object):
             token.token_refresh()
             self._ctx.reloadAuthContext()
             r = requests.get(url, headers=self._getHeadersWithAccessToken())
+        elif r.status_code == 504:  # Gateway time-out
+            for i in range(1, 10):
+                # wait and re-execute it 10 times
+                logger.info(__name__ + " 504 (gateway time-out) wait " +
+                            str(WAIT_INTERVAL_SEC) + " seconds and re-execute. Try " + str(i))
+                time.wait(WAIT_INTERVAL_SEC)
+                r = requests.post(url, headers=self._getHeadersWithAccessToken(), data=data)
+                if r.status_code != 504:
+                    break;
 
         if r.status_code != 200:
             raise Exception("Status code: " + str(r.status_code) + " , body: " + r.text)
@@ -97,11 +116,20 @@ class KorbitClient(object):
             token.token_refresh()
             self._ctx.reloadAuthContext()
             r = requests.get(url, headers=self._getHeadersWithAccessToken())
+        elif r.status_code == 504:  # Gateway time-out
+            for i in range(1, 10):
+                # wait and re-execute it 10 times
+                logger.info(__name__ + " 504 (gateway time-out) wait " +
+                            str(WAIT_INTERVAL_SEC) + " seconds and re-execute. Try " + str(i))
+                time.wait(WAIT_INTERVAL_SEC)
+                r = requests.post(url, headers=self._getHeadersWithAccessToken(), data=data)
+                if r.status_code != 504:
+                    break;
 
         if r.status_code != 200:
             raise Exception("Status code: " + str(r.status_code) + " , body: " + r.text)
 
-        return json.loads(r.text)   # {"orderId":4140437,"status":"success","currencyPair":"btc_krw"}
+        return json.loads(r.text)   # ex: {"orderId":4140437,"status":"success","currencyPair":"btc_krw"}
 
 
     def getOpenOrders(self, offset=0, limit=10):
@@ -115,13 +143,20 @@ class KorbitClient(object):
             "limit": limit
         }
 
-        # print(data)
-
         r = requests.get(url, headers=self._getHeadersWithAccessToken(), params=params)
         if r.status_code == 401:
             token.token_refresh()
             self._ctx.reloadAuthContext()
             r = requests.get(url, headers=self._getHeadersWithAccessToken())
+        elif r.status_code == 504:  # Gateway time-out
+            for i in range(1, 10):
+                # wait and re-execute it 10 times
+                logger.info(__name__ + " 504 (gateway time-out) wait " +
+                            str(WAIT_INTERVAL_SEC) + " seconds and re-execute. Try " + str(i))
+                time.wait(WAIT_INTERVAL_SEC)
+                r = requests.get(url, headers=self._getHeadersWithAccessToken(), params=params)
+                if r.status_code != 504:
+                    break;
 
         if r.status_code != 200:
             raise Exception("Status code: " + str(r.status_code) + " , body: " + r.text)
@@ -144,6 +179,15 @@ class KorbitClient(object):
             token.token_refresh()
             self._ctx.reloadAuthContext()
             r = requests.get(url, headers=self._getHeadersWithAccessToken())
+        elif r.status_code == 504:  # Gateway time-out
+            for i in range(1, 10):
+                # wait and re-execute it 10 times
+                logger.info(__name__ + " 504 (gateway time-out) wait " +
+                            str(WAIT_INTERVAL_SEC) + " seconds and re-execute. Try " + str(i))
+                time.wait(WAIT_INTERVAL_SEC)
+                r = requests.get(url, headers=self._getHeadersWithAccessToken(), params=params)
+                if r.status_code != 504:
+                    break;
 
         if r.status_code != 200:
             raise Exception("Status code: " + str(r.status_code) + " , body: " + r.text)
