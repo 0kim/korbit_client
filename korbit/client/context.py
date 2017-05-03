@@ -47,7 +47,7 @@ class Context(object) :
         self._context['ACCESS_TOKEN'] = access_token
         self._context['REFRESH_TOKEN'] = refresh_token
         self._context['LAST_REFRESH_TIME'] = last_refresh_time
-        self._saveContext()
+        self.saveContext()
 
     def getRefreshToken(self):
         return self._context['REFRESH_TOKEN']

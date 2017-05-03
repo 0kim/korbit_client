@@ -61,7 +61,7 @@ class KorbitClient(object):
             logger.info("Successfully updated an access token")
         else:
             # Fail
-            logger.warning("Unable to refresh an access token: " + r.headers)
+            logger.warning("Unable to refresh an access token: " + str(r.headers))
             raise Exception("Unable to refresh an access token")
 
     def getUserInfo(self):
