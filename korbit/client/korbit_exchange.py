@@ -1,8 +1,9 @@
 #-*- coding: utf-8 -*-
 
+import logging
 import requests
 import json
-
+from korbit.client.properties import Properties
 
 CATEGORY = {
     'all' : 'all',  # 매수/매도 모두
@@ -18,11 +19,13 @@ TIME = {
 
 CURRENCY_PAIR = 'btc_krw'
 
+logger = logging.getLogger(__file__)
 
 class KorbitExchage(object):
+    _properties = None
 
-    def __init__(self):
-        return
+    def __init__(self, prop_file):
+        self._properties = Properties(prop_file)
 
     def getLatestBid(self):
         bids = self.getOrderbook(category=CATEGORY['bid'])
@@ -45,7 +48,7 @@ class KorbitExchage(object):
         }
 
         # curl -D - "https://api.korbit.co.kr/v1/orderbook?currency_pair=$CURRENCY_PAIR"
-        url = "https://api.korbit.co.kr/v1/orderbook"
+        url = self._properties.getApiUrl() + "/v1/orderbook"
         r = requests.get(url, params=params)
         if r.status_code != 200:
             raise Exception("Status code: " + str(r.status_code) + " , body: " + r.text)
@@ -75,7 +78,8 @@ class KorbitExchage(object):
         }
 
         # curl -D - "https://api.korbit.co.kr/v1/transactions?currency_pair=$CURRENCY_PAIR"
-        url = "https://api.korbit.co.kr/v1/transactions"
+
+        url = self._properties.getApiUrl() + "/v1/transactions"
         r = requests.get(url, params=params)
         if r.status_code != 200:
             raise Exception("Status code: " + str(r.status_code) + " , body: " + r.text)

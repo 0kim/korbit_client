@@ -6,12 +6,12 @@ import pymysql
 
 import korbit.client.adapter as kbadapter
 from korbit.client.korbit_exchange import KorbitExchage
-from util import util
+from korbit.util import util
 
 TABLE_NAME = 'all_transactions'
 prop_mysql = util.load_properties('../adapter_mysql.json')
 
-kbexchnage = KorbitExchage()
+kbexchnage = KorbitExchage('../properties.json')
 mywriter = kbadapter.MysqlOutputAdapter(prop_mysql, TABLE_NAME)
 
 transactions = kbexchnage.getFilledOrders(time='day')
