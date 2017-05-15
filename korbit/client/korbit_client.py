@@ -78,7 +78,7 @@ class KorbitClient(object):
                 # wait and re-execute it 10 times
                 logger.info(__name__ + " 504 (gateway time-out) wait " +
                             str(WAIT_INTERVAL_SEC) + " seconds and re-execute. Try " + str(i))
-                time.wait(WAIT_INTERVAL_SEC)
+                time.sleep(WAIT_INTERVAL_SEC)
                 r = requests.get(url, headers=self._getHeadersWithAccessToken())
                 if r.status_code != 504:
                     break;
@@ -118,7 +118,7 @@ class KorbitClient(object):
                 # wait and re-execute it 10 times
                 logger.info(__name__ + " 504 (gateway time-out) wait " +
                             str(WAIT_INTERVAL_SEC) + " seconds and re-execute. Try " + str(i))
-                time.wait(WAIT_INTERVAL_SEC)
+                time.sleep(WAIT_INTERVAL_SEC)
                 r = requests.post(url, headers=self._getHeadersWithAccessToken(), data=data)
                 if r.status_code != 504:
                     break;
@@ -155,7 +155,7 @@ class KorbitClient(object):
                 # wait and re-execute it 10 times
                 logger.info(__name__ + " 504 (gateway time-out) wait " +
                             str(WAIT_INTERVAL_SEC) + " seconds and re-execute. Try " + str(i))
-                time.wait(WAIT_INTERVAL_SEC)
+                time.sleep(WAIT_INTERVAL_SEC)
                 r = requests.post(url, headers=self._getHeadersWithAccessToken(), data=data)
                 if r.status_code != 504:
                     break;
@@ -187,7 +187,7 @@ class KorbitClient(object):
                 # wait and re-execute it 10 times
                 logger.info(__name__ + " 504 (gateway time-out) wait " +
                             str(WAIT_INTERVAL_SEC) + " seconds and re-execute. Try " + str(i))
-                time.wait(WAIT_INTERVAL_SEC)
+                time.sleep(WAIT_INTERVAL_SEC)
                 r = requests.get(url, headers=self._getHeadersWithAccessToken(), params=params)
                 if r.status_code != 504:
                     break;
@@ -218,7 +218,7 @@ class KorbitClient(object):
                 # wait and re-execute it 10 times
                 logger.info(__name__ + " 504 (gateway time-out) wait " +
                             str(WAIT_INTERVAL_SEC) + " seconds and re-execute. Try " + str(i))
-                time.wait(WAIT_INTERVAL_SEC)
+                time.sleep(WAIT_INTERVAL_SEC)
                 r = requests.get(url, headers=self._getHeadersWithAccessToken(), params=params)
                 if r.status_code != 504:
                     break;
